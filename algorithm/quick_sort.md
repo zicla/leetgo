@@ -1,58 +1,18 @@
-package main
+## Quick Sort
+### 快速排序
 
-import "fmt"
+核心思想：
 
-func QuickSort(arr []int, start int, end int) {
+    1.选一个值作为哨兵，小的在左，大的在右。
+    
+    2.递归使用1的标准。
+    
+复杂度：
 
-	if start >= end {
-		return
-	}
-
-	headIndex := start
-	tailIndex := end
-
-	standarIndex := headIndex
-	for headIndex < tailIndex {
-
-		if standarIndex == headIndex {
-			if arr[standarIndex] > arr[tailIndex] {
-				temp := arr[standarIndex]
-				arr[standarIndex] = arr[tailIndex]
-				arr[tailIndex] = temp
-
-				standarIndex = tailIndex
-				headIndex++
-			} else {
-				tailIndex--
-			}
-		} else if standarIndex == tailIndex {
-
-			if arr[standarIndex] < arr[headIndex] {
-				temp := arr[standarIndex]
-				arr[standarIndex] = arr[headIndex]
-				arr[headIndex] = temp
-
-				standarIndex = headIndex
-				tailIndex--
-
-			} else {
-				headIndex++
-			}
-
-		}
-
-	}
-
-	QuickSort(arr, start, standarIndex-1)
-	QuickSort(arr, standarIndex+1, end)
-
-}
-
-func main() {
-	fmt.Println("Quick Sort")
-
-	a := []int{5, 4, 2, 1, 3, 100, 0, 200, 500}
-	QuickSort(a, 0, len(a)-1)
-
-	fmt.Printf("%v", a)
-}
+    1.平均时间复杂度：nlog(n)   
+    
+    2.空间复杂度：
+      首先就地快速排序使用的空间是O(1)的，也就是个常数级；
+      而真正消耗空间的就是递归调用了，因为每次递归就要保持一些数据
+      最优的情况下空间复杂度为：O(logn)；每一次都平分数组的情况
+      最差的情况下空间复杂度为：O(n)；退化为冒泡排序的情况

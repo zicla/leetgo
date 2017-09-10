@@ -2,56 +2,28 @@ package main
 
 import "fmt"
 
-func QuickSort(arr []int, start int, end int) {
+//要求传入的arr为从小到达排列。返回所在位置，如果找不到，返回-1
+func BinarySearch(arr []int, start int, end int, target int) int {
 
-	if start >= end {
-		return
+	if start > end {
+		return -1
 	}
-
-	headIndex := start
-	tailIndex := end
-
-	standarIndex := headIndex
-	for headIndex < tailIndex {
-
-		if standarIndex == headIndex {
-			if arr[standarIndex] > arr[tailIndex] {
-				temp := arr[standarIndex]
-				arr[standarIndex] = arr[tailIndex]
-				arr[tailIndex] = temp
-
-				standarIndex = tailIndex
-				headIndex++
-			} else {
-				tailIndex--
-			}
-		} else if standarIndex == tailIndex {
-
-			if arr[standarIndex] < arr[headIndex] {
-				temp := arr[standarIndex]
-				arr[standarIndex] = arr[headIndex]
-				arr[headIndex] = temp
-
-				standarIndex = headIndex
-				tailIndex--
-
-			} else {
-				headIndex++
-			}
-
-		}
-
+	standardIndex := start + (end-start)/2
+	if arr[standardIndex] == target {
+		return standardIndex
+	} else if arr[standardIndex] < target {
+		return BinarySearch(arr, start+1, end, target)
+	} else {
+		return BinarySearch(arr, start, end-1, target)
 	}
-
-	QuickSort(arr, start, standarIndex-1)
-	QuickSort(arr, standarIndex+1, end)
 }
 
 func main() {
-	fmt.Println("Quick Sort")
+	fmt.Println("Binary Search")
 
-	a := []int{5, 4, 2, 1, 3, 100, 0, 200, 500}
-	QuickSort(a, 0, len(a)-1)
+	a := []int{1, 2, 3, 4, 5, 6, 7, 8}
 
-	fmt.Printf("%v", a)
+	b := BinarySearch(a, 0, len(a)-1, 3)
+
+	fmt.Println(b)
 }
