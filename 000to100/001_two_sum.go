@@ -1,4 +1,4 @@
-package main
+package _00to100
 
 import "fmt"
 
