@@ -4,15 +4,25 @@ import "fmt"
 
 func twoSum(nums []int, target int) []int {
 
+	N := len(nums)
 
-	return []int{1, 2}
+	for start := 0; start <= N-2; start++ {
+
+		for end := start + 1; end <= N-1; end++ {
+
+			if nums[start]+nums[end] == target {
+				return []int{start, end}
+			}
+		}
+	}
+	return []int{-1, -1}
 }
 
 func main() {
 
-	nums := []int{4, 5, 6}
+	nums := []int{2, 7, 11, 15}
 
-	target := 9
+	target := 18
 
-	fmt.Println(nums[0] + target)
+	fmt.Printf("%v", twoSum(nums, target))
 }
