@@ -9,7 +9,7 @@ func twoSum(nums []int, target int) []int {
 	dict := make(map[int]int)
 	for i := 0; i < N; i++ {
 
-		//解决两个相同数字组成的。
+		//solve the two same data situation.
 		old, ok := dict[nums[i]]
 		if ok && target%2 == 0 && target/2 == nums[i] {
 			return []int{old, i}
