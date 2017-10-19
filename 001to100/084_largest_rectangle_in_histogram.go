@@ -31,9 +31,13 @@ func largestRectangleArea(heights []int) int {
 
 			//最后一个元素出栈时，宽度为全部。
 			if topIndex == -1 {
-				area = max(area, arr[top]*i)
+				if area < arr[top]*i {
+					area = arr[top] * i
+				}
 			} else {
-				area = max(area, arr[top]*(i-stack[topIndex]-1))
+				if area < arr[top]*(i-stack[topIndex]-1) {
+					area = arr[top] * (i - stack[topIndex] - 1)
+				}
 			}
 			i--
 		}
@@ -67,7 +71,7 @@ func main() {
 
 	fmt.Println(largestRectangleArea(matrix))
 
-	matrix = []int{3,6,5,7,4,8,1,0}
+	matrix = []int{3, 6, 5, 7, 4, 8, 1, 0}
 
 	fmt.Println(largestRectangleArea(matrix))
 
