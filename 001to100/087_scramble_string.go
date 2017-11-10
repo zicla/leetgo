@@ -23,6 +23,7 @@ func recursive1(s1 string, s2 string) bool {
 		return s1 == s2
 	}
 
+	//通过判断各个字符的数量来进行剪枝
 	map1 := make(map[byte]int)
 	for i := 0; i < length; i++ {
 		map1[s1[i]]++
