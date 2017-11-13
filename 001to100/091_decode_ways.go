@@ -18,29 +18,47 @@ func numDecodingsRecursive(s string, start int, end int) int {
 		}
 	}
 
+	ch0 := s[start]
 	ch1 := s[end-1]
 	ch2 := s[end]
 
-	if end-start >= 2 {
+	if ch0 == '0' {
+		return 0
+	}
 
-		if ch1 == '1' || (ch1 == '2' && (ch2 == '0' || ch2 == '1' || ch2 == '2' || ch2 == '3' || ch2 == '4' || ch2 == '5' || ch2 == '6')) {
-			return numDecodingsRecursive(s, start, end-1) + 1
+	if ch1 == '0' && ch2 == '0' {
+		return 0
+	}
+
+	if ch2 == '0' {
+
+		if ch1 == '1' || ch1 == '2' {
+
+			if end-start == 1 {
+				return 1
+			}
+
+			pre := numDecodingsRecursive(s, start, end-2)
+			if pre == 0 {
+				return 0
+			}
+			return pre
 		} else {
-			return numDecodingsRecursive(s, start, end-1)
+			return 0
 		}
 
+	} else if ch1 == '1' || (ch1 == '2' && (ch2 == '1' || ch2 == '2' || ch2 == '3' || ch2 == '4' || ch2 == '5' || ch2 == '6')) {
+		pre := numDecodingsRecursive(s, start, end-1)
+		if pre == 0 {
+			return 0
+		}
+		return pre + 1
 	} else {
-
-		if s[end-1] == '0' {
-
+		pre := numDecodingsRecursive(s, start, end-1)
+		if pre == 0 {
+			return 0
 		}
-
-		if (ch1 == '1' || (ch1 == '2' && (ch2 == '0' || ch2 == '1' || ch2 == '2' || ch2 == '3' || ch2 == '4' || ch2 == '5' || ch2 == '6'))) && end-2 > start {
-			return numDecodingsRecursive(s, start, end-1) + 1
-		} else {
-			return numDecodingsRecursive(s, start, end-1)
-		}
-
+		return pre
 	}
 
 }
@@ -51,5 +69,13 @@ func main() {
 	fmt.Printf("%v\n", numDecodings("0"))
 	fmt.Printf("%v\n", numDecodings("10"))
 	fmt.Printf("%v\n", numDecodings("11"))
+	fmt.Printf("%v\n", numDecodings("00"))
+	fmt.Printf("%v\n", numDecodings("01"))
+	fmt.Printf("%v\n", numDecodings("012"))
+	fmt.Printf("%v\n", numDecodings("100"))
+	fmt.Printf("%v\n", numDecodings("110"))
+	fmt.Printf("%v\n", numDecodings("230"))
+	fmt.Printf("%v\n", numDecodings("12120"))
+	fmt.Printf("%v\n", numDecodings("1212"))
 
 }
