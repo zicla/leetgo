@@ -13,30 +13,33 @@ func reverseBetween(head *ListNode092, m int, n int) *ListNode092 {
 		return head
 	}
 
+	pleft := head
 	p := head
 	for i := 0; i < m-1; i++ {
 		p = p.Next
-	}
-
-	z := (n - m) / 2
-	if (n-m)%2 == 1 {
-		z = z + 1
-	}
-	for i := 0; i < z; i++ {
-
-		tmp := p
-		k := n - m - 2*i
-		for j := 0; j < k; j++ {
-			tmp = tmp.Next
+		if i == m-3 {
+			pleft = p
 		}
-
-		t := p.Val
-		p.Val = tmp.Val
-		tmp.Val = t
-
-		p = p.Next
-
 	}
+
+	newHead := p
+	newTail := p
+	p = p.Next
+	for j := m - 1; j < n-1; j++ {
+
+		q := p.Next
+		newTail.Next = q
+		p.Next = newHead
+		newHead = p
+
+		p = q
+	}
+
+	if m == 1 {
+		return newHead
+	}
+
+	pleft.Next = newHead
 
 	return head
 
@@ -53,19 +56,19 @@ func PrintListNode(head *ListNode092) {
 
 func main() {
 	list := &ListNode092{Val: 1, Next: &ListNode092{Val: 2, Next: &ListNode092{Val: 3, Next: &ListNode092{Val: 4, Next: &ListNode092{Val: 5}}}}}
-	reverseBetween(list, 2, 4)
-	PrintListNode(list)
+	newList := reverseBetween(list, 2, 4)
+	PrintListNode(newList)
 
 	list = &ListNode092{Val: 1, Next: &ListNode092{Val: 2, Next: &ListNode092{Val: 3, Next: &ListNode092{Val: 4, Next: &ListNode092{Val: 5}}}}}
-	reverseBetween(list, 1, 5)
-	PrintListNode(list)
+	newList = reverseBetween(list, 1, 5)
+	PrintListNode(newList)
 
 	list = &ListNode092{Val: 1, Next: &ListNode092{Val: 2, Next: &ListNode092{Val: 3, Next: &ListNode092{Val: 4, Next: &ListNode092{Val: 5, Next: &ListNode092{Val: 6}}}}}}
-	reverseBetween(list, 1, 4)
-	PrintListNode(list)
+	newList = reverseBetween(list, 1, 4)
+	PrintListNode(newList)
 
 	list = &ListNode092{Val: 1}
-	reverseBetween(list, 1, 1)
-	PrintListNode(list)
+	newList = reverseBetween(list, 1, 1)
+	PrintListNode(newList)
 
 }
