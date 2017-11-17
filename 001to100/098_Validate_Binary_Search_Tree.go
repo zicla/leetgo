@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
 
 type TreeNode098 struct {
 	Val   int
@@ -8,73 +11,19 @@ type TreeNode098 struct {
 	Right *TreeNode098
 }
 
-func minBST(root *TreeNode098) int {
-	cur := root
-	min := root.Val
-	for cur != nil {
-		if cur.Val < min {
-			min = cur.Val
-		}
-		cur = cur.Left
-	}
-	return min
-}
-
-func maxBST(root *TreeNode098) int {
-
-	cur := root
-	max := root.Val
-	for cur != nil {
-		if cur.Val > max {
-			max = cur.Val
-		}
-		cur = cur.Right
-	}
-	return max
-}
-
 func isValidBST(root *TreeNode098) bool {
+
+	return isValidBSTRecursive(root, math.MinInt32, math.MaxInt32)
+
+}
+
+func isValidBSTRecursive(root *TreeNode098, min int, max int) bool {
 
 	if root == nil {
 		return true
 	}
+	return min < root.Val && root.Val < max && isValidBSTRecursive(root.Left, min, root.Val) && isValidBSTRecursive(root.Right, root.Val, max)
 
-	left := root.Left
-	right := root.Right
-	if left == nil && right == nil {
-		return true
-	} else if left == nil {
-		if root.Val >= right.Val {
-			return false
-		} else {
-			b1 := isValidBST(right)
-
-			return b1 && root.Val < minBST(right)
-		}
-
-	} else if right == nil {
-		if root.Val < left.Val {
-			return false
-		} else {
-			b1 := isValidBST(left)
-			return b1 && root.Val > maxBST(left)
-		}
-
-	} else {
-		if root.Val >= right.Val || root.Val < left.Val {
-			return false
-		} else {
-
-			//b1 := isValidBST(right)
-			//b2 := root.Val < minBST(right)
-			//b3 := isValidBST(left)
-			//b4 := root.Val > maxBST(left)
-			//return b1 && b2 && b3 && b4
-
-			return isValidBST(right) && root.Val < minBST(right) && isValidBST(left) && root.Val > maxBST(left)
-		}
-
-	}
 }
 
 func main() {
