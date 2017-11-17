@@ -13,7 +13,7 @@ type TreeNode098 struct {
 
 func isValidBST(root *TreeNode098) bool {
 
-	return isValidBSTRecursive(root, math.MinInt32, math.MaxInt32)
+	return isValidBSTRecursive(root, math.MinInt64, math.MaxInt64)
 
 }
 
