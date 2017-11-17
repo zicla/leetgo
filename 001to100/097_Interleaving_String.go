@@ -11,35 +11,48 @@ func isInterleave(s1 string, s2 string, s3 string) bool {
 		return false
 	}
 
-	result := []bool{false}
-
-	isInterleaveRecursive(s1, N1, 0, s2, N2, 0, s3, N3, 0, result)
-
-	return result[0];
-}
-
-func isInterleaveRecursive(s1 string, N1 int, n1 int, s2 string, N2 int, n2 int, s3 string, N3 int, n3 int, result []bool) {
-
-	if result[0] {
-		return
+	dp := make([][]bool, N1+1)
+	for k := 0; k < N1+1; k++ {
+		dp[k] = make([]bool, N2+1)
 	}
 
-	if n3 == N3 {
-		result[0] = true
+	for k1 := 1; k1 <= N1; k1++ {
+		if s3[k1-1] == s1[k1-1] {
+			dp[k1][0] = true
+		} else {
+			break
+		}
 	}
 
-	if n1 < N1 && s3[n3] == s1[n1] {
-
-		isInterleaveRecursive(s1, N1, n1+1, s2, N2, n2, s3, N3, n3+1, result)
+	for k2 := 1; k2 <= N2; k2++ {
+		if s3[k2-1] == s2[k2-1] {
+			dp[0][k2] = true
+		} else {
+			break
+		}
 	}
 
-	if n2 < N2 && s3[n3] == s2[n2] {
-		isInterleaveRecursive(s1, N1, n1, s2, N2, n2+1, s3, N3, n3+1, result)
+	dp[0][0] = true
+
+	for i := 1; i <= N1; i++ {
+		for j := 1; j <= N2; j++ {
+
+			if dp[i][j-1] && s3[i+j-1] == s2[j-1] {
+				dp[i][j] = true
+			}
+
+			if dp[i-1][j] && s3[i+j-1] == s1[i-1] {
+				dp[i][j] = true
+			}
+
+		}
 	}
 
+	return dp[N1][N2]
 }
 
 func main() {
 	fmt.Printf("%v\n", isInterleave("aabcc", "dbbca", "aadbbcbcac"))
 	fmt.Printf("%v\n", isInterleave("aabcc", "dbbca", "aadbbbaccc"))
+	fmt.Printf("%v\n", isInterleave("", "", ""))
 }
