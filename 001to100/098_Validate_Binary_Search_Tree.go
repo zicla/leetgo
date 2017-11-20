@@ -5,19 +5,13 @@ import (
 	"math"
 )
 
-type TreeNode098 struct {
-	Val   int
-	Left  *TreeNode098
-	Right *TreeNode098
-}
-
-func isValidBST(root *TreeNode098) bool {
+func isValidBST(root *TreeNode) bool {
 
 	return isValidBSTRecursive(root, math.MinInt64, math.MaxInt64)
 
 }
 
-func isValidBSTRecursive(root *TreeNode098, min int, max int) bool {
+func isValidBSTRecursive(root *TreeNode, min int, max int) bool {
 
 	if root == nil {
 		return true
@@ -28,16 +22,16 @@ func isValidBSTRecursive(root *TreeNode098, min int, max int) bool {
 
 func main() {
 
-	tree := &TreeNode098{Val: 2, Left: &TreeNode098{Val: 1}, Right: &TreeNode098{Val: 3}}
+	tree := &TreeNode{Val: 2, Left: &TreeNode{Val: 1}, Right: &TreeNode{Val: 3}}
 	fmt.Printf("%v\n", isValidBST(tree))
 
-	tree = &TreeNode098{Val: 1, Left: &TreeNode098{Val: 2}, Right: &TreeNode098{Val: 3}}
+	tree = &TreeNode{Val: 1, Left: &TreeNode{Val: 2}, Right: &TreeNode{Val: 3}}
 	fmt.Printf("%v\n", isValidBST(tree))
 
-	tree = &TreeNode098{Val: 1}
+	tree = &TreeNode{Val: 1}
 	fmt.Printf("%v\n", isValidBST(tree))
 
-	tree = &TreeNode098{Val: 1, Left: &TreeNode098{Val: -1}}
+	tree = &TreeNode{Val: 1, Left: &TreeNode{Val: -1}}
 	fmt.Printf("%v\n", isValidBST(tree))
 
 }

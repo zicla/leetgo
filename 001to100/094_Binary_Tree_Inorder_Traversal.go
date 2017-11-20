@@ -1,12 +1,9 @@
 package main
 
-import "fmt"
-
-type TreeNode struct {
-	Val   int
-	Left  *TreeNode
-	Right *TreeNode
-}
+import (
+	"fmt"
+	. "leetgo/structure/btree"
+)
 
 type Stack struct {
 	N   int

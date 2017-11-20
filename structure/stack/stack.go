@@ -1,4 +1,4 @@
-package structure
+package stack
 
 type Stack struct {
 	N   int
