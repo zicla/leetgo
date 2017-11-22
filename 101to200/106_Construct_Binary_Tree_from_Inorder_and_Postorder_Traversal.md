@@ -4,7 +4,7 @@ import (
 	. "leetgo/structure/btree"
 )
 
-func buildTree105(preorder []int, inorder []int) *TreeNode {
+func buildTree(preorder []int, inorder []int) *TreeNode {
 
 	if preorder == nil {
 		return nil
@@ -22,18 +22,18 @@ func buildTree105(preorder []int, inorder []int) *TreeNode {
 
 	root := &TreeNode{
 		Val:   preorder[0],
-		Left:  buildTree105(preorder[1:rootIndex+1], inorder[0:rootIndex]),
-		Right: buildTree105(preorder[rootIndex+1:], inorder[rootIndex+1:]),
+		Left:  buildTree(preorder[1:rootIndex+1], inorder[0:rootIndex]),
+		Right: buildTree(preorder[rootIndex+1:], inorder[rootIndex+1:]),
 	}
 	return root
 }
 
 func main() {
-	tree := buildTree105([]int{1, 2, 4, 5, 3, 6, 7}, []int{4, 2, 5, 1, 6, 3, 7})
+	tree := buildTree([]int{1, 2, 4, 5, 3, 6, 7}, []int{4, 2, 5, 1, 6, 3, 7})
 	PrintLevelBinaryTree(tree)
-	tree1 := buildTree105([]int{}, []int{})
+	tree1 := buildTree([]int{}, []int{})
 	PrintLevelBinaryTree(tree1)
-	tree2 := buildTree105([]int{1}, []int{1})
+	tree2 := buildTree([]int{1}, []int{1})
 	PrintLevelBinaryTree(tree2)
 
 }
