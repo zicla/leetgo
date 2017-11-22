@@ -5,46 +5,19 @@ import (
 	. "leetgo/structure/btree"
 )
 
-type Stack struct {
-	N   int
-	Arr []*TreeNode
-}
-
-func (this *Stack) push(node *TreeNode) {
-	if this.Arr == nil {
-		this.Arr = make([]*TreeNode, 1<<7-1)
-	}
-	this.Arr[this.N] = node
-	this.N++
-}
-
-func (this *Stack) pop() *TreeNode {
-	if this.N == 0 {
-		return nil
-	} else {
-		node := this.Arr[this.N-1]
-		this.N--
-		return node
-	}
-}
-
-func (this *Stack) empty() bool {
-	return this.N == 0
-}
-
 func inorderTraversal(root *TreeNode) []int {
 	result := make([]int, 1<<15-1)
 	N := 0
 	stack := &Stack{}
 	cur := root
-	for !stack.empty() || cur != nil {
+	for !stack.Empty() || cur != nil {
 		for cur != nil {
-			stack.push(cur)
+			stack.Push(cur)
 			cur = cur.Left
 		}
 		//此时到达了最左下角，需要出栈了。
-		if !stack.empty() {
-			cur = stack.pop()
+		if !stack.Empty() {
+			cur = stack.Pop()
 			result[N] = cur.Val
 			N++
 			cur = cur.Right
