@@ -2,6 +2,7 @@ package btree
 
 import (
 	"math"
+	"fmt"
 )
 
 type TreeNode struct {
@@ -28,4 +29,34 @@ func CreateBinaryTree(data []int, index int) *TreeNode {
 	}
 
 	return pNode;
+}
+
+func PrintLevelBinaryTree(root *TreeNode) {
+
+	levelMap := make(map[int][]int)
+	levelMax := []int{-1}
+	PrintLevelBinaryTreeScan(root, 0, levelMax, levelMap)
+
+	var res [][]int
+	for i := 0; i <= levelMax[0]; i++ {
+		res = append(res, levelMap[i])
+	}
+	fmt.Printf("%v\n", res)
+}
+
+func PrintLevelBinaryTreeScan(root *TreeNode, level int, levelMax []int, levelMap map[int][]int) {
+
+	if root == nil {
+		return
+	}
+	if level > levelMax[0] {
+		levelMax[0] = level
+	}
+	var arr []int
+	if levelMap[level] != nil {
+		arr = levelMap[level]
+	}
+	levelMap[level] = append(arr, root.Val)
+	PrintLevelBinaryTreeScan(root.Left, level+1, levelMax, levelMap)
+	PrintLevelBinaryTreeScan(root.Right, level+1, levelMax, levelMap)
 }
