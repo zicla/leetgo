@@ -2,6 +2,7 @@ package main
 
 import (
 	. "leetgo/structure/btree"
+	_ "github.com/timtadh/data-structures"
 )
 
 func sortedArrayToBST(nums []int) *TreeNode {
