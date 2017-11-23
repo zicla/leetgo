@@ -106,6 +106,24 @@ func InsertAVL(root **AVLTree, e ElemType, taller *bool) bool {
 	return true;
 }
 
+//从AVL中删除掉一个元素。
+func DeleteAVL(root **AVLTree, e ElemType, taller *bool) bool {
+	if (*root) == nil {
+		return false
+	}
+
+	if e < (*root).Val {
+
+	} else if e > (*root).Val {
+
+	} else {
+
+	}
+
+	return true
+
+}
+
 func LeftBalance(root **AVLTree) {
 
 	left := (*root).Left
