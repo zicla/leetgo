@@ -107,7 +107,7 @@ func InsertAVL(root **AVLTree, e ElemType, taller *bool) bool {
 }
 
 //从AVL中删除掉一个元素。
-func DeleteAVL(root **AVLTree, e ElemType, taller *bool) bool {
+func DeleteAVL(root **AVLTree, e ElemType, shorter *bool) bool {
 	if (*root) == nil {
 		return false
 	}
