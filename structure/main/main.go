@@ -5,17 +5,30 @@ import "leetgo/structure/avl"
 func main() {
 
 	var root *avl.AVLTree
-	var hi bool
 
-	avl.InsertAVL(&root, 6, &hi)
-	avl.InsertAVL(&root, 4, &hi)
-	avl.InsertAVL(&root, 7, &hi)
-	avl.InsertAVL(&root, 3, &hi)
-	avl.InsertAVL(&root, 5, &hi)
+	avl.InsertAVL(&root, 50)
+	avl.InsertAVL(&root, 30)
+	avl.InsertAVL(&root, 70)
+	avl.InsertAVL(&root, 60)
+	avl.InsertAVL(&root, 80)
+
+	avl.InsertAVL(&root, 55)
+
 
 	avl.PrintLevelAVLTree(root)
 
-	avl.DeleteAVL(&root, 7, &hi)
+	avl.DeleteAVL(&root, 50)
+	avl.PrintLevelAVLTree(root)
+	avl.DeleteAVL(&root, 30)
+	avl.PrintLevelAVLTree(root)
+	avl.DeleteAVL(&root, 70)
+	avl.PrintLevelAVLTree(root)
+	avl.DeleteAVL(&root, 60)
+	avl.PrintLevelAVLTree(root)
+	avl.DeleteAVL(&root, 80)
+	avl.PrintLevelAVLTree(root)
+	avl.DeleteAVL(&root, 55)
+
 
 	avl.PrintLevelAVLTree(root)
 
