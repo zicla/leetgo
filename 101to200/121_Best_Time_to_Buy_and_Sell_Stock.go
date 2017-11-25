@@ -7,15 +7,24 @@ func maxProfit(prices []int) int {
 	if N == 0 {
 		return 0
 	}
-	max := 0
-	for i := 0; i < N-1; i++ {
-		for j := i + 1; j < N; j++ {
-			if prices[j]-prices[i] > max {
-				max = prices[j] - prices[i]
+	res := 0
+	min := prices[0]
+	for i := 0; i < N; i++ {
+
+		//遇到更便宜的了，那就考虑在这里买进可能更好的
+		if prices[i] < min {
+			min = prices[i]
+		} else {
+			//遇到比买价更贵，那么就该考虑卖出了。
+			tmp := prices[i] - min
+			if tmp > res {
+				res = tmp
 			}
+
 		}
 	}
-	return max
+
+	return res
 }
 
 func main() {
