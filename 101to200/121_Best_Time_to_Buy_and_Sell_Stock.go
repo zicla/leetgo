@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func maxProfit(prices []int) int {
+func maxProfit121(prices []int) int {
 	N := len(prices)
 	if N == 0 {
 		return 0
@@ -29,6 +29,6 @@ func maxProfit(prices []int) int {
 
 func main() {
 
-	fmt.Printf("%v\n", maxProfit([]int{7, 1, 5, 3, 6, 4}))
-	fmt.Printf("%v\n", maxProfit([]int{7, 6, 4, 3, 1}))
+	fmt.Printf("%v\n", maxProfit121([]int{7, 1, 5, 3, 6, 4}))
+	fmt.Printf("%v\n", maxProfit121([]int{7, 6, 4, 3, 1}))
 }
