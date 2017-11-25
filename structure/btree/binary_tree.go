@@ -60,3 +60,41 @@ func PrintLevelBinaryTreeScan(root *TreeNode, level int, levelMax []int, levelMa
 	PrintLevelBinaryTreeScan(root.Left, level+1, levelMax, levelMap)
 	PrintLevelBinaryTreeScan(root.Right, level+1, levelMax, levelMap)
 }
+
+func PrintBinaryTreeGraph(root *TreeNode) {
+	if root == nil {
+		return;
+	}
+	var queue []*TreeNode
+	cur := root
+	queue = append(queue, cur)
+	queue = append(queue, nil)
+	for len(queue) != 0 {
+		cur := queue[0]
+		queue = queue[1:]
+		if cur == nil {
+
+			if len(queue) == 0 {
+				//换行了。
+				fmt.Println()
+				break
+			} else {
+				queue = append(queue, cur)
+				//换行了。
+				fmt.Println()
+				continue
+			}
+		}
+
+		fmt.Printf("%v ", cur.Val)
+
+		if cur.Left != nil {
+			queue = append(queue, cur.Left)
+		}
+
+		if cur.Right != nil {
+			queue = append(queue, cur.Right)
+		}
+
+	}
+}
