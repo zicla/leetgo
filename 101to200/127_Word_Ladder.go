@@ -2,98 +2,57 @@ package main
 
 import (
 	"fmt"
-	"math"
 )
 
 func ladderLength(beginWord string, endWord string, wordList []string) int {
 
-	const INF = math.MaxInt32
+	//队列
+	var queue []string
 
-	//准备创建一个图出来。
-	beginWordAppear := false
-	endWordAppear := false
-	beginWordIndex := 0
-	endWordIndex := 0
-	for i, v := range wordList {
-		if v == beginWord {
-			beginWordAppear = true
-			beginWordIndex = i
-		}
-		if v == endWord {
-			endWordAppear = true
-			endWordIndex = i
-		}
-	}
-	if !beginWordAppear {
-		wordList = append(wordList, beginWord)
-		beginWordIndex = len(wordList) - 1
-	}
-	if !endWordAppear {
-		wordList = append(wordList, endWord)
-		endWordIndex = len(wordList) - 1
-		return 0
+	var dict = make(map[string]bool)
+	for _, v := range wordList {
+		dict[v] = true
 	}
 
-	var distance = func(a string, b string) int {
-		notSame := 0
-		for i := 0; i < len(a); i++ {
-			if a[i] != b[i] {
-				notSame++
-			}
-		}
-		if notSame > 1 {
-			return INF
-		} else {
-			return 1
-		}
-	}
+	queue = append(queue, beginWord)
+	//当前所在层数
+	level := 1
+	oldLevelItems := 1
+	newLevelItems := 0
 
-	//从beginWordIndex到endWordIndex的最短距离
-	N := len(wordList)
-	matrix := make([][]int, N)
-	for i := 0; i < N; i++ {
-		matrix[i] = make([]int, N)
-	}
+	dict[beginWord] = false
 
-	for i := 0; i < N; i++ {
-		for j := i; j < N; j++ {
-			if i == j {
-				matrix[i][j] = 0
-			} else {
-				matrix[i][j] = distance(wordList[i], wordList[j])
-				matrix[j][i] = matrix[i][j]
-			}
-		}
-	}
+	for len(queue) > 0 {
+		str := queue[0]
+		queue = queue[1:]
+		oldLevelItems--
 
-	//可以看作是走迷宫的题目，使用深度优先搜索可以快速获取最短路径，使用广度优先搜索可以获取具体每一条路的策略。
-	//d表示到每个其他节点的距离。
-	d := make([]int, N)
-	for i := 0; i < N; i++ {
-		d[i] = INF
-	}
-	visited := make([]bool, N)
+		for i := 0; i < len(str); i++ {
 
-	d[beginWordIndex] = 0
-	visited[beginWordIndex] = true
-
-	curPath := 0
-
-	for i := 0; i <= N; i++ {
-		if d[i] == curPath {
-			i := beginWordIndex
-			for j := 0; j < N; j++ {
-				if !visited[j] {
-					visited[j] = true
-					if matrix[i][j] == 1 {
-						d[j] = curPath + 1
-					}
+			chs := []rune(str)
+			for c := 'a'; c <= 'z'; c++ {
+				chs[i] = c
+				newStr := string(chs)
+				if newStr == endWord && dict[newStr] {
+					return level + 1
+				}
+				if dict[newStr] {
+					queue = append(queue, newStr)
+					dict[newStr] = false
+					newLevelItems++
 				}
 			}
 		}
+
+		if oldLevelItems == 0 {
+			oldLevelItems = newLevelItems
+			newLevelItems = 0
+			level++
+		}
+
 	}
 
-	return endWordIndex;
+	return 0;
 }
 
 func main() {
