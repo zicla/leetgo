@@ -66,4 +66,8 @@ func main() {
 
 	dist := graph.Dijkstra(matrix, 3)
 	fmt.Printf("%v\n", dist)
+
+	a := graph.Floyd(matrix, 3, 1)
+	fmt.Printf("%v\n", a)
+
 }
