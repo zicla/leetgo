@@ -4,33 +4,22 @@ import (
 	"fmt"
 )
 
-func singleNumber137(nums []int) int {
-
-	N := len(nums)
-	var box = make(map[int]int)
-	for i := 0; i < N; i++ {
-		box[nums[i]]++
+//重点参考：https://discuss.leetcode.com/topic/22821/an-general-way-to-handle-all-this-sort-of-questions?page=1
+func singleNumber(nums []int) int {
+	a := 0;
+	b := 0;
+	for _, c := range nums {
+		ta := (^a & b & c) | (a & ^b & ^c);
+		b = (^a & ^b & c) | (^a & b & ^c);
+		a = ta;
 	}
-	for k, v := range box {
-		if v == 1 {
-			return k
-		}
-	}
-
-	if N == 0 {
-		return 0
-	} else {
-		return nums[0]
-	}
-
+	//we need find the number that is 01,10 => 1, 00 => 0.
+	return a | b;
 }
 
 func main() {
 
-	a := 2 ^ 2
-	fmt.Println(a)
-
-	fmt.Printf("%v\n", singleNumber137([]int{1, 2, 2}))
-	fmt.Printf("%v\n", singleNumber137([]int{2, 2, 3, 3, 5}))
-	fmt.Printf("%v\n", singleNumber137([]int{1, 2, 2, 10, 1}))
+	fmt.Printf("%v\n", singleNumber([]int{1, 2, 2, 2}))
+	fmt.Printf("%v\n", singleNumber([]int{2, 2, 3, 3, 2, 3, 5}))
+	fmt.Printf("%v\n", singleNumber([]int{1, 2, 2, 1, 2, 10, 1}))
 }

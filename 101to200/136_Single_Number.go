@@ -4,33 +4,19 @@ import (
 	"fmt"
 )
 
-func singleNumber(nums []int) int {
+func singleNumber136(nums []int) int {
 
-	N := len(nums)
-	var box = make(map[int]int)
-	for i := 0; i < N; i++ {
-		box[nums[i]]++
+	b := 0
+	for _, v := range nums {
+		b = b ^ v
 	}
-	for k, v := range box {
-		if v == 1 {
-			return k
-		}
-	}
-
-	if N == 0 {
-		return 0
-	} else {
-		return nums[0]
-	}
+	return b
 
 }
 
 func main() {
 
-	a := 2 ^ 2
-	fmt.Println(a)
-
-	fmt.Printf("%v\n", singleNumber([]int{1, 2, 2}))
-	fmt.Printf("%v\n", singleNumber([]int{2, 2, 3, 3, 5}))
-	fmt.Printf("%v\n", singleNumber([]int{1, 2, 2, 10, 1}))
+	fmt.Printf("%v\n", singleNumber136([]int{1, 2, 2}))
+	fmt.Printf("%v\n", singleNumber136([]int{2, 2, 3, 3, 5}))
+	fmt.Printf("%v\n", singleNumber136([]int{1, 2, 2, 10, 1}))
 }
