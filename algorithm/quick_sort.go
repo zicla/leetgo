@@ -2,49 +2,28 @@ package main
 
 import "fmt"
 
-func QuickSort(arr []int, start int, end int) {
+//start:开始的index end:结束的index
+func QuickSort(v []int, left int, right int) {
 
-	if start >= end {
-		return
-	}
-
-	headIndex := start
-	tailIndex := end
-
-	standarIndex := headIndex
-	for headIndex < tailIndex {
-
-		if standarIndex == headIndex {
-			if arr[standarIndex] > arr[tailIndex] {
-				temp := arr[standarIndex]
-				arr[standarIndex] = arr[tailIndex]
-				arr[tailIndex] = temp
-
-				standarIndex = tailIndex
-				headIndex++
-			} else {
-				tailIndex--
+	if left < right {
+		key := v[left];
+		low := left;
+		high := right;
+		for low < high {
+			for low < high && v[high] > key {
+				high--;
 			}
-		} else if standarIndex == tailIndex {
-
-			if arr[standarIndex] < arr[headIndex] {
-				temp := arr[standarIndex]
-				arr[standarIndex] = arr[headIndex]
-				arr[headIndex] = temp
-
-				standarIndex = headIndex
-				tailIndex--
-
-			} else {
-				headIndex++
+			v[low] = v[high];
+			for low < high && v[low] < key {
+				low++;
 			}
-
+			v[high] = v[low];
 		}
-
+		v[low] = key;
+		QuickSort(v, left, low-1);
+		QuickSort(v, low+1, right);
 	}
 
-	QuickSort(arr, start, standarIndex-1)
-	QuickSort(arr, standarIndex+1, end)
 }
 
 func main() {
