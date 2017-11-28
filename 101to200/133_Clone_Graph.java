@@ -1,55 +1,107 @@
-package main
+package com.lish.practice.leetcode.p134;
 
-import (
-	"fmt"
-)
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-func minCut(s string) int {
-	N := len(s)
-	//P记录了i到j的字串是否回文串。
-	var P [][]bool
-	for i := 0; i < N; i++ {
-		P = append(P, make([]bool, N))
-	}
-	//dp[i]表示对于字符串 s[i:N] 最小需要的刀数。
-	dp := make([]int, N+1)
+/**
+ * Definition for undirected graph.
+ * class UndirectedGraphNode {
+ * int label;
+ * List<UndirectedGraphNode> neighbors;
+ * UndirectedGraphNode(int x) { label = x; neighbors = new ArrayList<UndirectedGraphNode>(); }
+ * };
+ */
+public class Solution {
 
-	for i := 0; i <= N; i++ {
-		dp[i] = N - i - 1;
-	}
 
-	for i := 0; i < N; i++ {
-		for j := 0; j < N; j++ {
-			P[i][j] = false;
-		}
-	}
+    public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
 
-	var min = func(a int, b int) int {
-		if a < b {
-			return a
-		}
-		return b
-	}
+        if (node == null) {
+            return null;
+        }
 
-	for i := N - 1; i >= 0; i-- {
+        Map<Integer, UndirectedGraphNode> map = new HashMap<>();
+        //同样的只去一次。
+        Map<Integer, Boolean> visited = new HashMap<>();
 
-		//每增加一个字符串
-		for j := i; j < N; j++ {
-			si := s[i]
-			sj := s[j]
-			if si == sj && (j-i <= 1 || P[i+1][j-1]) {
-				P[i][j] = true;
-				dp[i] = min(dp[i], dp[j+1]+1);
-			}
-		}
-	}
-	return dp[0];
-}
+        return cloneGraphRecursive(node, map, visited);
+    }
 
-func main() {
 
-	fmt.Printf("%v\n", minCut("ababa"))
-	fmt.Printf("%v\n", minCut("ababababababababababababcbabababababababababababa"))
-	fmt.Printf("%v\n", minCut("aab"))
-	fmt.Printf("%v\n", minCut("abcd"))
+    public UndirectedGraphNode cloneGraphRecursive(UndirectedGraphNode node, Map<Integer, UndirectedGraphNode> map, Map<Integer, Boolean> visited) {
+
+        if (node == null) {
+            return null;
+        }
+
+
+        UndirectedGraphNode newNode;
+        if (map.get(node.label) != null) {
+            newNode = map.get(node.label);
+        } else {
+            newNode = new UndirectedGraphNode(node.label);
+            map.put(node.label, newNode);
+        }
+
+
+        if (visited.get(node.label) == null || !visited.get(node.label)) {
+            visited.put(node.label, true);
+
+            for (UndirectedGraphNode n : node.neighbors) {
+                UndirectedGraphNode tmp = cloneGraphRecursive(n, map, visited);
+                newNode.neighbors.add(tmp);
+            }
+
+            return newNode;
+        } else {
+            return newNode;
+        }
+    }
+
+
+    public static class UndirectedGraphNode {
+        int label;
+        List<UndirectedGraphNode> neighbors;
+
+        UndirectedGraphNode(int x) {
+            label = x;
+            neighbors = new ArrayList<UndirectedGraphNode>();
+        }
+    }
+
+    public static void main(String[] args) {
+
+
+        UndirectedGraphNode node0 = new UndirectedGraphNode(0);
+        UndirectedGraphNode node1 = new UndirectedGraphNode(1);
+        UndirectedGraphNode node2 = new UndirectedGraphNode(2);
+        UndirectedGraphNode node3 = new UndirectedGraphNode(3);
+        UndirectedGraphNode node4 = new UndirectedGraphNode(4);
+        UndirectedGraphNode node5 = new UndirectedGraphNode(5);
+
+        node0.neighbors.add(node1);
+        node0.neighbors.add(node5);
+        node1.neighbors.add(node2);
+        node1.neighbors.add(node5);
+        node2.neighbors.add(node3);
+        node3.neighbors.add(node4);
+        node3.neighbors.add(node4);
+        node4.neighbors.add(node5);
+        node4.neighbors.add(node5);
+
+        UndirectedGraphNode cloneGraph1 = new Solution().cloneGraph(node0);
+
+        System.out.println(cloneGraph1);
+
+
+        UndirectedGraphNode node = new UndirectedGraphNode(0);
+        node.neighbors.add(node);
+        node.neighbors.add(node);
+
+        UndirectedGraphNode cloneGraph = new Solution().cloneGraph(node);
+
+        System.out.println(cloneGraph);
+    }
 }
