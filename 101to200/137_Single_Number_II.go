@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func singleNumber(nums []int) int {
+func singleNumber137(nums []int) int {
 
 	N := len(nums)
 	var box = make(map[int]int)
@@ -30,7 +30,7 @@ func main() {
 	a := 2 ^ 2
 	fmt.Println(a)
 
-	fmt.Printf("%v\n", singleNumber([]int{1, 2, 2}))
-	fmt.Printf("%v\n", singleNumber([]int{2, 2, 3, 3, 5}))
-	fmt.Printf("%v\n", singleNumber([]int{1, 2, 2, 10, 1}))
+	fmt.Printf("%v\n", singleNumber137([]int{1, 2, 2}))
+	fmt.Printf("%v\n", singleNumber137([]int{2, 2, 3, 3, 5}))
+	fmt.Printf("%v\n", singleNumber137([]int{1, 2, 2, 10, 1}))
 }
