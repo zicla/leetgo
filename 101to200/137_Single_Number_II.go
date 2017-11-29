@@ -6,15 +6,15 @@ import (
 
 //重点参考：https://discuss.leetcode.com/topic/22821/an-general-way-to-handle-all-this-sort-of-questions?page=1
 func singleNumber(nums []int) int {
-	a := 0;
-	b := 0;
+	a := 0
+	b := 0
 	for _, c := range nums {
-		ta := (^a & b & c) | (a & ^b & ^c);
-		b = (^a & ^b & c) | (^a & b & ^c);
-		a = ta;
+		ta := (^a & b & c) | (a & ^b & ^c)
+		b = (^a & ^b & c) | (^a & b & ^c)
+		a = ta
 	}
 	//we need find the number that is 01,10 => 1, 00 => 0.
-	return a | b;
+	return b
 }
 
 func main() {
