@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func wordBreak(s string, wordDict []string) bool {
+func wordBreak139(s string, wordDict []string) bool {
 	dictMap := make(map[string]bool)
 	for _, v := range wordDict {
 		dictMap[v] = true
@@ -31,10 +31,10 @@ func wordBreak(s string, wordDict []string) bool {
 
 func main() {
 
-	fmt.Printf("%v\n", wordBreak("ab", []string{"a", "c"}))
-	fmt.Printf("%v\n", wordBreak("ab", []string{"a", "b"}))
-	fmt.Printf("%v\n", wordBreak("leetcode", []string{"leet", "code"}))
+	fmt.Printf("%v\n", wordBreak139("ab", []string{"a", "c"}))
+	fmt.Printf("%v\n", wordBreak139("ab", []string{"a", "b"}))
+	fmt.Printf("%v\n", wordBreak139("leetcode", []string{"leet", "code"}))
 
-	fmt.Printf("%v\n", wordBreak("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab", []string{"a", "aa", "aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa", "aaaaaaaa", "aaaaaaaaa", "aaaaaaaaaa"}))
+	fmt.Printf("%v\n", wordBreak139("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab", []string{"a", "aa", "aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa", "aaaaaaaa", "aaaaaaaaa", "aaaaaaaaaa"}))
 
 }
