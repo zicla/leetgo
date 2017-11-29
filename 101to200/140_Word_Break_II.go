@@ -2,76 +2,65 @@ package main
 
 import (
 	"fmt"
+	"strings"
 )
 
 func wordBreak(s string, wordDict []string) []string {
-	dictMap := make(map[string]int)
+	dictMap := make(map[string]bool)
 	for _, v := range wordDict {
-		dictMap[v] ++
+		dictMap[v] = true
 	}
 	N := len(s)
 
-	//dp[i][j]表示 startIndex=i endIndex=j 这个字符串从dictMap中多少种组合形式。我们要求的便是 dp[0][N-1]
-	var dp [][]int
-	for i := 0; i < N; i++ {
-		dp = append(dp, make([]int, N))
-	}
+	//dp[i]表示前i个字符串是否ok.
+	dp := make([]bool, N+1)
+	dp[0] = true
+	for i := 0; i <= N; i++ {
+		for j := 0; j < i; j++ {
 
-	var store [][][]string
-	for i := 0; i < N; i++ {
-		var tmp [][]string
-		for j := 0; j < N; j++ {
-			var st []string
-			tmp = append(tmp, st)
-		}
-		store = append(store, tmp)
-	}
-
-	for i := 0; i < N; i++ {
-		for j := i; j < N; j++ {
-			dp[i][j] = dictMap[s[i:j+1]]
-
-			if dp[i][j] == 1 {
-				store[i][j] = append(store[i][j], s[i:j+1])
+			if dp[j] && dictMap[s[j:i]] {
+				dp[i] = true;
+				break
 			}
+
 		}
 	}
 
-	for i := 0; i < N; i++ {
-		for j := i + 1; j < N; j++ {
+	var path []string
+	var res []string
 
-			for k := 0; k < j-i; k++ {
+	if dp[N] {
+		wordBreakRecursive(s, N, 0, dp, dictMap, &path, &res)
+	}
 
-				step := dp[i][i+k] * dp[i+k+1][j]
-				dp[i][j] += step
+	return res
+}
 
-				if step > 0 {
-					for x := 0; x < len(store[i][i+k]); x++ {
-						for y := 0; y < len(store[i+k+1][j]); y++ {
+//这里表示找 s[index:N]的word break.
+func wordBreakRecursive(s string, N int, index int, dp []bool, dictMap map[string]bool, path *[]string, res *[]string) {
 
-							str1 := store[i][i+k][x]
-							str2 := store[i+k+1][j][y]
-							var str string
-							if str1 == "" && str2 == "" {
-								str = ""
-							} else if str1 == "" {
-								str = str2
-							} else if str2 == "" {
-								str = str1
-							} else {
-								str = str1 + " " + str2
-							}
+	//这条路可行，记录下来
+	if index == N {
 
-							store[i][j] = append(store[i][j], str)
-						}
-					}
+		tmp := strings.Join(*path, " ")
+		*res = append(*res, tmp)
+
+	} else {
+		for i := index; i <= N; i++ {
+
+			if dp[i] {
+				if dictMap[s[index:i]] {
+					*path = append(*path, s[index:i])
+					wordBreakRecursive(s, N, i, dp, dictMap, path, res)
+					*path = (*path)[:len(*path)-1]
+
 				}
 
 			}
+
 		}
 	}
 
-	return store[0][N-1]
 }
 
 func main() {
