@@ -4,7 +4,6 @@ import (
 	. "leetgo/structure/btree"
 )
 
-//反转一个链表。
 func preorderTraversal(root *TreeNode) []int {
 	if root == nil {
 		return []int{}
