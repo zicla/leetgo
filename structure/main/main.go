@@ -129,8 +129,15 @@ func testHeap() {
 	fmt.Printf("%v \n", b)
 }
 
+func testMergeSort() {
+	b := []int{20, 10, 30, 40, 60, 160, 70, 80, 5}
+	sort.MergeSort(b, 0, len(b)-1)
+
+	fmt.Printf("%v \n", b)
+}
+
 func main() {
 
-	testHeap()
+	testMergeSort()
 
 }
