@@ -94,9 +94,20 @@ func testBubbleSort() {
 
 }
 
-func main() {
-	testBubbleSort()
 
-	testQuickSort()
+func testInsertSort() {
+
+	fmt.Println("testInsertSort")
+
+	a := []int{5, 4, 2, 1, 3, 100, 0, 200, 500}
+	sort.InsertSort(a)
+
+	fmt.Printf("%v\n", a)
+
+}
+
+func main() {
+
+	testInsertSort()
 
 }
