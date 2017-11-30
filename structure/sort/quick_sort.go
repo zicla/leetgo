@@ -1,6 +1,4 @@
-package main
-
-import "fmt"
+package sort
 
 //start:开始的index end:结束的index
 func QuickSort(v []int, left int, right int) {
@@ -26,11 +24,3 @@ func QuickSort(v []int, left int, right int) {
 
 }
 
-func main() {
-	fmt.Println("Quick Sort")
-
-	a := []int{5, 4, 2, 1, 3, 100, 0, 200, 500}
-	QuickSort(a, 0, len(a)-1)
-
-	fmt.Printf("%v", a)
-}

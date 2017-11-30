@@ -7,6 +7,7 @@ import (
 	"math"
 	"leetgo/structure/graph"
 	"fmt"
+	"leetgo/structure/sort"
 )
 
 const INF = math.MaxInt32
@@ -53,7 +54,7 @@ func testBTree() {
 
 }
 
-func main() {
+func testDijkstra() {
 	matrix := [][]int{
 		{0, 12, INF, INF, INF, 16, 14},
 		{12, 0, 10, INF, INF, 7, INF},
@@ -69,5 +70,33 @@ func main() {
 
 	a := graph.Floyd(matrix, 3, 1)
 	fmt.Printf("%v\n", a)
+}
+
+
+func testQuickSort() {
+	fmt.Println("Quick Sort")
+
+	a := []int{5, 4, 2, 1, 3, 100, 0, 200, 500}
+	sort.QuickSort(a, 0, len(a)-1)
+
+	fmt.Printf("%v \n", a)
+}
+
+
+func testBubbleSort() {
+
+	fmt.Println("BubbleSort")
+
+	a := []int{5, 4, 2, 1, 3, 100, 0, 200, 500}
+	sort.BubbleSort(a)
+
+	fmt.Printf("%v\n", a)
+
+}
+
+func main() {
+	testBubbleSort()
+
+	testQuickSort()
 
 }
