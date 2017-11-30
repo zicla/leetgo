@@ -6,12 +6,18 @@ package btree
 //往堆中插入元素
 func HeapInsert(arr []int, val int) []int {
 
-	N := len(arr)
 	arr = append(arr, val)
+	N := len(arr)
 
+	HeapUp(arr, N)
+	return arr
+}
+
+//向上整理。前N个元素
+func HeapUp(arr []int, N int) {
 	//准备从最后一个元素向上调整。
 	//当前调整元素的索引
-	start := N
+	start := N - 1
 	//父节点的索引
 	parent := (start - 1) / 2
 	//当前节点的大小
@@ -28,10 +34,7 @@ func HeapInsert(arr []int, val int) []int {
 	}
 
 	arr[start] = tmp
-
-	return arr
 }
-
 
 //从堆中删除元素
 func HeapRemove(arr []int, val int) []int {
@@ -58,6 +61,14 @@ func HeapRemove(arr []int, val int) []int {
 	arr = arr[:N-1]
 	N = N - 1
 
+	HeapDown(arr, N, index)
+
+	return arr
+}
+
+//向下整理前N个元素,从index这个元素开始。
+func HeapDown(arr []int, N int, index int) {
+
 	//从index开始向下调整。
 	c := index
 	left := 2*c + 1
@@ -80,6 +91,28 @@ func HeapRemove(arr []int, val int) []int {
 		}
 	}
 	arr[c] = tmp
+}
 
-	return arr
+//将一个乱序的数组，整理成一个二叉堆。
+func HeapCreate(arr []int) {
+	N := len(arr)
+	//最笨的办法，从第一个元素开始插入到最后一个元素。
+	for i := 1; i <= N; i++ {
+		HeapUp(arr, i)
+	}
+}
+
+//将一个数组进行堆排序。
+func HeapSort(arr []int) {
+	N := len(arr)
+
+	//先搞一个堆出来。
+	HeapCreate(arr)
+
+	//都和最后一个元素交换，交换后调整
+	for i := N - 1; i > 0; i-- {
+		arr[i], arr[0] = arr[0], arr[i]
+		HeapDown(arr, i, 0)
+	}
+
 }

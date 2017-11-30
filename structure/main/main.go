@@ -120,7 +120,13 @@ func testHeap() {
 	arr = btree.HeapRemove(arr, 90)
 	fmt.Printf("%v\n", arr)
 
+	a := []int{10, 20, 30, 40, 50, 60, 70, 80, 90}
+	btree.HeapCreate(a)
+	fmt.Printf("%v\n", a)
 
+	b := []int{20, 10, 30, 40, 60, 160, 70, 80, 5}
+	btree.HeapSort(b);
+	fmt.Printf("%v \n", b)
 }
 
 func main() {
