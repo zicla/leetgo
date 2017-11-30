@@ -72,7 +72,6 @@ func testDijkstra() {
 	fmt.Printf("%v\n", a)
 }
 
-
 func testQuickSort() {
 	fmt.Println("Quick Sort")
 
@@ -81,7 +80,6 @@ func testQuickSort() {
 
 	fmt.Printf("%v \n", a)
 }
-
 
 func testBubbleSort() {
 
@@ -94,7 +92,6 @@ func testBubbleSort() {
 
 }
 
-
 func testInsertSort() {
 
 	fmt.Println("testInsertSort")
@@ -106,8 +103,28 @@ func testInsertSort() {
 
 }
 
+func testHeap() {
+	arr := []int{}
+	arr = btree.HeapInsert(arr, 10)
+	arr = btree.HeapInsert(arr, 40)
+	arr = btree.HeapInsert(arr, 30)
+	arr = btree.HeapInsert(arr, 60)
+	arr = btree.HeapInsert(arr, 90)
+	arr = btree.HeapInsert(arr, 70)
+	arr = btree.HeapInsert(arr, 20)
+	arr = btree.HeapInsert(arr, 50)
+	arr = btree.HeapInsert(arr, 80)
+	fmt.Printf("%v\n", arr)
+	arr = btree.HeapInsert(arr, 85)
+	fmt.Printf("%v\n", arr)
+	arr = btree.HeapRemove(arr, 90)
+	fmt.Printf("%v\n", arr)
+
+
+}
+
 func main() {
 
-	testInsertSort()
+	testHeap()
 
 }
