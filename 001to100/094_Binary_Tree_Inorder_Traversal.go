@@ -12,7 +12,7 @@ func inorderTraversal(root *TreeNode) []int {
 	if root == nil {
 		return res
 	}
-	var stack = []*TreeNode{}
+	var stack []*TreeNode
 	cur := root
 	for len(stack) != 0 || cur != nil {
 

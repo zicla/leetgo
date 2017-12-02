@@ -8,10 +8,37 @@ func postorderTraversal(root *TreeNode) []int {
 	if root == nil {
 		return []int{}
 	}
-	arr1 := postorderTraversal(root.Left)
-	arr2 := postorderTraversal(root.Right)
+	var res []int
+	var stack = []*TreeNode{}
+	visitedMap := make(map[*TreeNode]bool)
 
-	return append(append(arr1, arr2...), root.Val)
+	//根节点入栈
+	stack = append(stack, root)
+	visitedMap[root] = false
+	var visited bool
+	for len(stack) != 0 {
+		root := stack[0]
+		stack = stack[1:]
+		visited = visitedMap[root]
+		if root == nil {
+			continue;
+		}
+		if visited {
+			res = append(res, root.Val)
+		} else {
+
+			//调整此处的顺序可以获取到前序中序和后续遍历
+			stack = append([]*TreeNode{root}, stack...)
+			visitedMap[root] = true
+
+			stack = append([]*TreeNode{root.Right}, stack...)
+			stack = append([]*TreeNode{root.Left}, stack...)
+
+
+
+		}
+	}
+	return res
 }
 
 func main() {
