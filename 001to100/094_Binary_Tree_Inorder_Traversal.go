@@ -6,24 +6,37 @@ import (
 )
 
 func inorderTraversal(root *TreeNode) []int {
-	result := make([]int, 1<<15-1)
-	N := 0
-	stack := &Stack{}
+
+	var res []int
+
+	if root == nil {
+		return res
+	}
+	var stack = []*TreeNode{}
 	cur := root
-	for !stack.Empty() || cur != nil {
+	for len(stack) != 0 || cur != nil {
+
+		//先一通左边疯狂入栈。
 		for cur != nil {
-			stack.Push(cur)
+			stack = append([]*TreeNode{cur}, stack...)
 			cur = cur.Left
 		}
-		//此时到达了最左下角，需要出栈了。
-		if !stack.Empty() {
-			cur = stack.Pop()
-			result[N] = cur.Val
-			N++
+
+		if len(stack) != 0 {
+			//出栈一个元素。
+			cur = stack[0]
+			stack = stack[1:]
+
+			//打印出当前结点。
+			res = append(res, cur.Val)
+
+			//把这个元素指到右边
 			cur = cur.Right
 		}
+
 	}
-	return result[0:N]
+	return res
+
 }
 
 func main() {
