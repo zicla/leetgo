@@ -17,7 +17,7 @@ func CreateBinaryTree(data []int, index int) *TreeNode {
 	N := len(data)
 	var pNode *TreeNode;
 	//数组中MinInt64 表示该节点为空
-	if index < N && data[index] != math.MinInt64 {
+	if index < N && data[index] != math.MinInt64 && data[index] != math.MaxInt64 {
 
 		left := CreateBinaryTree(data, 2*index+1)
 		right := CreateBinaryTree(data, 2*index+2)
@@ -97,6 +97,7 @@ func PrintLevelBinaryTreeScan(root *TreeNode, height int, level int, seatIndex i
 	PrintLevelBinaryTreeScan(root.Right, height, level+1, seatIndex+(1<<uint(height-level-2)), matrix)
 }
 
+//采用广度优先搜索的方式，按层打印出整个二叉树。
 func PrintBinaryTreeGraph(root *TreeNode) {
 	if root == nil {
 		return;
@@ -141,4 +142,73 @@ func PrintBinaryTreeGraph(root *TreeNode) {
 		}
 
 	}
+}
+
+//二叉树前序遍历
+func BinaryTreePreOrder(root *TreeNode) {
+	if root == nil {
+		return
+	}
+
+	fmt.Printf("%v ", root.Val)
+	BinaryTreePreOrder(root.Left)
+	BinaryTreePreOrder(root.Right)
+}
+
+//二叉树非递归方式前序遍历。
+//递归的本质就是栈，如果非递归的话，那就相当于要自己来构建这个栈，顺着递归的思路写便可。
+func BinaryTreePreOrderIterative(root *TreeNode) {
+	if root == nil {
+		return
+	}
+
+	var stack = []*TreeNode{root}
+
+	var cur *TreeNode
+	for len(stack) != 0 {
+
+		//弹出一个结点。
+		cur = stack[0]
+		stack = stack[1:]
+
+		//打印出当前结点。
+		fmt.Printf("%v ", cur.Val)
+
+
+		//由于栈是先进后出，因此这里右结点先入栈，左结点后入栈。
+
+		//同时把右结点入栈。
+		if cur.Right != nil {
+			stack = append([]*TreeNode{cur.Right}, stack...)
+		}
+
+		//同时把左结点入栈。
+		if cur.Left != nil {
+			stack = append([]*TreeNode{cur.Left}, stack...)
+		}
+
+	}
+
+}
+
+//二叉树中序遍历
+func BinaryTreeInOrder(root *TreeNode) {
+	if root == nil {
+		return
+	}
+
+	BinaryTreePreOrder(root.Left)
+	fmt.Printf("%v ", root.Val)
+	BinaryTreePreOrder(root.Right)
+}
+
+//二叉树后序遍历
+func BinaryTreePostOrder(root *TreeNode) {
+	if root == nil {
+		return
+	}
+
+	BinaryTreePreOrder(root.Left)
+	BinaryTreePreOrder(root.Right)
+	fmt.Printf("%v ", root.Val)
 }
