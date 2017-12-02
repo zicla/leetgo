@@ -243,3 +243,109 @@ func BinaryTreePostOrder(root *TreeNode) {
 	BinaryTreePostOrder(root.Right)
 	fmt.Printf("%v ", root.Val)
 }
+
+//二叉树非递归方式后序遍历
+//递归的本质就是栈，如果非递归的话，那就相当于要自己来构建这个栈，顺着递归的思路写便可。
+func BinaryTreePostOrderUnify(root *TreeNode) {
+	if root == nil {
+		return
+	}
+	var stack = []*TreeNode{}
+	visitedMap := make(map[*TreeNode]bool)
+
+	//根节点入栈
+	stack = append(stack, root)
+	visitedMap[root] = false
+	var visited bool
+	for len(stack) != 0 {
+		root := stack[0]
+		stack = stack[1:]
+		visited = visitedMap[root]
+		if root == nil {
+			continue;
+		}
+		if visited {
+			fmt.Printf("%v ", root.Val)
+		} else {
+			//调整此处的顺序可以获取到前序中序和后续遍历
+			stack = append([]*TreeNode{root}, stack...)
+			visitedMap[root] = true
+			stack = append([]*TreeNode{root.Right}, stack...)
+			stack = append([]*TreeNode{root.Left}, stack...)
+		}
+	}
+
+}
+
+//二叉树非递归方式前序遍历
+func BinaryTreePreOrderUnify(root *TreeNode) {
+	if root == nil {
+		return
+	}
+	var stack = []*TreeNode{}
+	visitedMap := make(map[*TreeNode]bool)
+
+	//根节点入栈
+	stack = append(stack, root)
+	visitedMap[root] = false
+	var visited bool
+	for len(stack) != 0 {
+		root := stack[0]
+		stack = stack[1:]
+		visited = visitedMap[root]
+		if root == nil {
+			continue;
+		}
+		if visited {
+			fmt.Printf("%v ", root.Val)
+		} else {
+
+			stack = append([]*TreeNode{root.Right}, stack...)
+			stack = append([]*TreeNode{root.Left}, stack...)
+
+			//调整此处的顺序可以获取到前序中序和后续遍历
+			stack = append([]*TreeNode{root}, stack...)
+			visitedMap[root] = true
+
+		}
+	}
+
+}
+
+//二叉树非递归方式中序遍历
+func BinaryTreeInOrderUnify(root *TreeNode) {
+	if root == nil {
+		return
+	}
+	var stack = []*TreeNode{}
+	visitedMap := make(map[*TreeNode]bool)
+
+	//根节点入栈
+	stack = append(stack, root)
+	visitedMap[root] = false
+	var visited bool
+	for len(stack) != 0 {
+		root := stack[0]
+		stack = stack[1:]
+		visited = visitedMap[root]
+		if root == nil {
+			continue;
+		}
+		if visited {
+			fmt.Printf("%v ", root.Val)
+		} else {
+
+			stack = append([]*TreeNode{root.Right}, stack...)
+
+			//调整此处的顺序可以获取到前序中序和后续遍历
+			stack = append([]*TreeNode{root}, stack...)
+			visitedMap[root] = true
+
+			stack = append([]*TreeNode{root.Left}, stack...)
+
+
+
+		}
+	}
+
+}
