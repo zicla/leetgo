@@ -1,0 +1,35 @@
+package main
+
+func buildTree105(preorder []int, inorder []int) *TreeNode {
+
+	if preorder == nil {
+		return nil
+	}
+	N := len(preorder)
+	if N == 0 {
+		return nil
+	}
+	rootIndex := -1
+	for i := 0; i < N; i++ {
+		if inorder[i] == preorder[0] {
+			rootIndex = i
+		}
+	}
+
+	root := &TreeNode{
+		Val:   preorder[0],
+		Left:  buildTree105(preorder[1:rootIndex+1], inorder[0:rootIndex]),
+		Right: buildTree105(preorder[rootIndex+1:], inorder[rootIndex+1:]),
+	}
+	return root
+}
+
+func main() {
+	tree := buildTree105([]int{1, 2, 4, 5, 3, 6, 7}, []int{4, 2, 5, 1, 6, 3, 7})
+	PrintLevelBinaryTree(tree)
+	tree1 := buildTree105([]int{}, []int{})
+	PrintLevelBinaryTree(tree1)
+	tree2 := buildTree105([]int{1}, []int{1})
+	PrintLevelBinaryTree(tree2)
+
+}
