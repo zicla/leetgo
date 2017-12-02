@@ -174,7 +174,6 @@ func BinaryTreePreOrderIterative(root *TreeNode) {
 		//打印出当前结点。
 		fmt.Printf("%v ", cur.Val)
 
-
 		//由于栈是先进后出，因此这里右结点先入栈，左结点后入栈。
 
 		//同时把右结点入栈。
@@ -197,9 +196,41 @@ func BinaryTreeInOrder(root *TreeNode) {
 		return
 	}
 
-	BinaryTreePreOrder(root.Left)
+	BinaryTreeInOrder(root.Left)
 	fmt.Printf("%v ", root.Val)
-	BinaryTreePreOrder(root.Right)
+	BinaryTreeInOrder(root.Right)
+}
+
+//二叉树非递归方式中序遍历
+//递归的本质就是栈，如果非递归的话，那就相当于要自己来构建这个栈，顺着递归的思路写便可。
+func BinaryTreeInOrderIterative(root *TreeNode) {
+	if root == nil {
+		return
+	}
+	var stack = []*TreeNode{}
+	cur := root
+	for len(stack) != 0 || cur != nil {
+
+		//先一通左边疯狂入栈。
+		for cur != nil {
+			stack = append([]*TreeNode{cur}, stack...)
+			cur = cur.Left
+		}
+
+		if len(stack) != 0 {
+			//出栈一个元素。
+			cur = stack[0]
+			stack = stack[1:]
+
+			//打印出当前结点。
+			fmt.Printf("%v ", cur.Val)
+
+			//把这个元素指到右边
+			cur = cur.Right
+		}
+
+	}
+
 }
 
 //二叉树后序遍历
@@ -208,7 +239,7 @@ func BinaryTreePostOrder(root *TreeNode) {
 		return
 	}
 
-	BinaryTreePreOrder(root.Left)
-	BinaryTreePreOrder(root.Right)
+	BinaryTreePostOrder(root.Left)
+	BinaryTreePostOrder(root.Right)
 	fmt.Printf("%v ", root.Val)
 }

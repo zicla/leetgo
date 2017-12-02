@@ -146,10 +146,17 @@ func testBinaryTreePreOrder() {
 	t := []int{1, 2, 3, 4, math.MaxInt64, 6, 7, 8, 9, math.MaxInt64, math.MaxInt64, 104, 104, math.MaxInt64, math.MaxInt64, 112, 112, 334}
 	tree := btree.CreateBinaryTree(t, 0)
 	btree.PrintLevelBinaryTree(tree)
-	btree.BinaryTreePreOrder(tree)
+	//btree.BinaryTreePreOrder(tree)
+	//fmt.Println()
+	//btree.BinaryTreePreOrderIterative(tree)
+	//fmt.Println()
+
+
+	btree.BinaryTreeInOrder(tree)
 	fmt.Println()
-	btree.BinaryTreePreOrderIterative(tree)
+	btree.BinaryTreeInOrderIterative(tree)
 	fmt.Println()
+
 }
 
 func main() {
