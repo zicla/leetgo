@@ -1,8 +1,8 @@
 package main
 
 import (
-	"math"
 	"fmt"
+	. "leetgo/structure/fraction"
 )
 
 type Point struct {
@@ -31,17 +31,17 @@ func maxPoints(points []Point) int {
 	}
 
 	//求两个点的斜率。
-	var findK = func(p1, p2 Point) float64 {
+	var findK = func(p1, p2 Point) *Fraction {
 		var upper int = p2.Y - p1.Y
 		var lower int = p2.X - p1.X
 
-		var k float64
 		if lower == 0 {
-			k = math.MaxFloat32
+			return NewMaxFraction()
+		} else if upper == 0 {
+			return NewZeroFraction()
 		} else {
-			k = float64(upper) / float64(lower)
+			return NewFraction(upper, lower)
 		}
-		return k
 	}
 
 	N := len(ps)
@@ -69,7 +69,7 @@ func maxPoints(points []Point) int {
 					p3 := ps[m]
 					fK := findK(p1, p3)
 
-					if fK-k > -1.0e-20 && fK-k < 1.0e-20 && k != 0.9999999894638303 {
+					if fK.Equal(k) {
 						num += pointMap[p3.X][p3.Y]
 					}
 				}
@@ -86,14 +86,17 @@ func maxPoints(points []Point) int {
 
 func main() {
 
+	res2 := maxPoints([]Point{{X: 2, Y: 3}, {X: 3, Y: 3}, {X: -5, Y: 3}})
+	fmt.Printf("%v \n", res2)
+
 	res1 := maxPoints([]Point{{X: 0, Y: 0}, {X: 94911151, Y: 94911150}, {X: 94911152, Y: 94911151}})
 	fmt.Printf("%v \n", res1)
 
-	//res := maxPoints([]Point{{X: 1, Y: 1}, {X: 1, Y: 1}, {X: 2, Y: 2}, {X: 2, Y: 2}, {X: 2, Y: 0}})
-	//fmt.Printf("%v \n", res)
-	//res = maxPoints([]Point{{X: 0, Y: 0}})
-	//fmt.Printf("%v \n", res)
-	//res = maxPoints([]Point{{X: 84, Y: 250}, {X: 0, Y: 0}, {X: 1, Y: 0}, {X: 0, Y: -70}, {X: 0, Y: -70}, {X: 1, Y: -1}, {X: 21, Y: 10}, {X: 42, Y: 90}, {X: -42, Y: -230}})
-	//fmt.Printf("%v \n", res)
+	res := maxPoints([]Point{{X: 1, Y: 1}, {X: 1, Y: 1}, {X: 2, Y: 2}, {X: 2, Y: 2}, {X: 2, Y: 0}})
+	fmt.Printf("%v \n", res)
+	res = maxPoints([]Point{{X: 0, Y: 0}})
+	fmt.Printf("%v \n", res)
+	res = maxPoints([]Point{{X: 84, Y: 250}, {X: 0, Y: 0}, {X: 1, Y: 0}, {X: 0, Y: -70}, {X: 0, Y: -70}, {X: 1, Y: -1}, {X: 21, Y: 10}, {X: 42, Y: 90}, {X: -42, Y: -230}})
+	fmt.Printf("%v \n", res)
 
 }
