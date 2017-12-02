@@ -11,6 +11,7 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
+//通过一个数组创建一颗二叉树。
 func CreateBinaryTree(data []int, index int) *TreeNode {
 
 	N := len(data)
@@ -31,55 +32,98 @@ func CreateBinaryTree(data []int, index int) *TreeNode {
 	return pNode;
 }
 
-func PrintLevelBinaryTree(root *TreeNode) {
-
-	levelMap := make(map[int][]int)
-	levelMax := []int{-1}
-	PrintLevelBinaryTreeScan(root, 0, levelMax, levelMap)
-
-	var res [][]int
-	for i := 0; i <= levelMax[0]; i++ {
-		res = append(res, levelMap[i])
+//获取一颗二叉树的总层数。
+func BinaryTreeHeight(root *TreeNode) int {
+	if root == nil {
+		return 0;
 	}
-	fmt.Printf("%v\n", res)
+	left := BinaryTreeHeight(root.Left)
+	right := BinaryTreeHeight(root.Right)
+	if left > right {
+		return left + 1
+	} else {
+		return right + 1
+	}
 }
 
-func PrintLevelBinaryTreeScan(root *TreeNode, level int, levelMax []int, levelMap map[int][]int) {
+func PrintLevelBinaryTree(root *TreeNode) {
 
 	if root == nil {
 		return
 	}
-	if level > levelMax[0] {
-		levelMax[0] = level
+
+	//树的层数
+	height := BinaryTreeHeight(root)
+	//最后一层的结点个数
+	lastLevelNum := 1 << uint(height-1)
+	//最后一层的位置数。
+	seatNum := 2*lastLevelNum - 1
+
+	//每个位置初始值都为无穷大
+	matrix := make([][]int, height)
+	for level := 0; level < height; level++ {
+		tmp := make([]int, seatNum)
+		for i := 0; i < seatNum; i++ {
+			tmp[i] = math.MaxInt64
+		}
+		matrix[level] = tmp
 	}
-	var arr []int
-	if levelMap[level] != nil {
-		arr = levelMap[level]
+
+	PrintLevelBinaryTreeScan(root, height, 0, lastLevelNum-1, matrix)
+
+	for i := 0; i < height; i++ {
+		for j := 0; j < seatNum; j++ {
+			t := matrix[i][j]
+			if t == math.MaxInt64 {
+				fmt.Printf("%3s", ".")
+			} else {
+				fmt.Printf("%3d", t)
+			}
+		}
+		fmt.Println()
 	}
-	levelMap[level] = append(arr, root.Val)
-	PrintLevelBinaryTreeScan(root.Left, level+1, levelMax, levelMap)
-	PrintLevelBinaryTreeScan(root.Right, level+1, levelMax, levelMap)
+
+}
+
+func PrintLevelBinaryTreeScan(root *TreeNode, height int, level int, seatIndex int, matrix [][]int) {
+
+	if root == nil {
+		return
+	}
+
+	matrix[level][seatIndex] = root.Val
+
+	PrintLevelBinaryTreeScan(root.Left, height, level+1, seatIndex-(1<<uint(height-level-2)), matrix)
+	PrintLevelBinaryTreeScan(root.Right, height, level+1, seatIndex+(1<<uint(height-level-2)), matrix)
 }
 
 func PrintBinaryTreeGraph(root *TreeNode) {
 	if root == nil {
 		return;
 	}
+	//队列
 	var queue []*TreeNode
+
 	cur := root
 	queue = append(queue, cur)
+	//此处特意放入一个nil，用于隔离每一层。
 	queue = append(queue, nil)
+
 	for len(queue) != 0 {
+
+		//出队列
 		cur := queue[0]
 		queue = queue[1:]
+
 		if cur == nil {
 
 			if len(queue) == 0 {
-				//换行了。
+				//整个遍历过程结束了。
 				fmt.Println()
 				break
 			} else {
-				queue = append(queue, cur)
+				//开始做准备，下一行了
+				queue = append(queue, nil)
 				//换行了。
 				fmt.Println()
 				continue
