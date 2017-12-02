@@ -15,3 +15,7 @@ Your solution should be in logarithmic complexity.
 
 Credits:
 Special thanks to @ts for adding this problem and creating all test cases.
+
+
+二分查找
+思路：如果中间元素大于其相邻后续元素，则中间元素左侧(包含该中间元素）必包含一个局部最大值。如果中间元素小于其相邻后续元素，则中间元素右侧必包含一个局部最大值。

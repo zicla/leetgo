@@ -8,22 +8,25 @@ func findPeakElement(nums []int) int {
 	if N == 1 {
 		return 0
 	}
-	for i := 0; i < N; i++ {
 
-		if i == 0 {
-			if nums[0] > nums[1] {
-				return 0
-			}
-		} else if i == N-1 {
-			if nums[N-1] > nums[N-2] {
-				return N - 1
-			}
-		} else {
-			if nums[i] > nums[i-1] && nums[i] > nums[i+1] {
-				return i
-			}
+	left := 0
+	right := N - 1
+
+	for left <= right {
+
+		if left == right {
+			return left
 		}
+
+		mid := (left + right) / 2
+		if nums[mid] < nums[mid+1] {
+			left = mid + 1
+		} else {
+			right = mid
+		}
+
 	}
+
 	return -1
 }
 
