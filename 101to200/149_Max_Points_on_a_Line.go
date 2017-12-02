@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	. "leetgo/structure/fraction"
 )
 
 type Point struct {
@@ -10,78 +9,49 @@ type Point struct {
 	Y int
 }
 
-//用小数存储会失败，必须使用分数存储。
+//三点共线的行列式：
+/*
+
+|x1 y1 1|
+|x2 y2 1| = 0
+|x3 y3 1|
+
+*/
 func maxPoints(points []Point) int {
 
-	//首先去除重复的点。
-	var pointMap = make(map[int]map[int]int)
-	var ps []Point
-	for i := 0; i < len(points); i++ {
-		p := points[i]
-
-		if _, ok := pointMap[p.X]; !ok {
-			pointMap[p.X] = make(map[int]int)
+	var max = func(a, b int) int {
+		if a > b {
+			return a
 		}
-
-		if _, ok := pointMap[p.X][p.Y]; !ok {
-			pointMap[p.X][p.Y] = 0
-			ps = append(ps, p)
-		}
-		pointMap[p.X][p.Y]++
+		return b
 	}
-
-	//求两个点的斜率。
-	var findK = func(p1, p2 Point) *Fraction {
-		var upper int = p2.Y - p1.Y
-		var lower int = p2.X - p1.X
-
-		if lower == 0 {
-			return NewMaxFraction()
-		} else if upper == 0 {
-			return NewZeroFraction()
-		} else {
-			return NewFraction(upper, lower)
-		}
-	}
-
-	N := len(ps)
-	res := 0
-	//以每个点为终点，向其他点画直线，并且数一数直线上有多少点。
+	res := 0;
+	N := len(points)
 	for i := 0; i < N; i++ {
-		p1 := ps[i]
-		if pointMap[p1.X][p1.Y] > res {
-			res = pointMap[p1.X][p1.Y]
-		}
-		for j := 0; j < N; j++ {
-
-			if i == j {
+		duplicate := 1;
+		for j := i + 1; j < N; j++ {
+			cnt := 0;
+			x1 := points[i].X
+			y1 := points[i].Y
+			x2 := points[j].X
+			y2 := points[j].Y
+			if x1 == x2 && y1 == y2 {
+				duplicate++
 				continue
-			} else {
-				p2 := ps[j]
-				k := findK(p1, p2)
-				num := pointMap[p1.X][p1.Y] + pointMap[p2.X][p2.Y]
-
-				//寻找在k上的其他点。
-				for m := 0; m < N; m++ {
-					if m == i || m == j {
-						continue
-					}
-					p3 := ps[m]
-					fK := findK(p1, p3)
-
-					if fK.Equal(k) {
-						num += pointMap[p3.X][p3.Y]
-					}
-				}
-				if num > res {
-					res = num
-				}
-
 			}
-
+			for k := 0; k < N; k++ {
+				x3 := points[k].X
+				y3 := points[k].Y
+				if x1*y2+x2*y3+x3*y1-x3*y2-x2*y1-x1*y3 == 0 {
+					cnt++
+				}
+			}
+			res = max(res, cnt);
 		}
+		//这里为了防止所有点都在同一个位置。
+		res = max(res, duplicate);
 	}
-	return res
+	return res;
 }
 
 func main() {
