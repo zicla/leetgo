@@ -12,60 +12,42 @@ func evalRPN(tokens []string) int {
 		return 0
 	}
 
-	var add = func(a, b int) int {
-		return a + b
-	}
-	var minus = func(a, b int) int {
-		return a - b
-	}
-	var times = func(a, b int) int {
-		return a * b
-	}
-	var divide = func(a, b int) int {
-		return a / b
-	}
-
-	operMap := make(map[string]func(a, b int) int)
-	operMap["+"] = add
-	operMap["-"] = minus
-	operMap["*"] = times
-	operMap["/"] = divide
-
 	//准备一个栈。
-	var stack = []string{tokens[0]}
-	i := 1
-	for i < N {
+	var stack = []int{}
 
-		str := tokens[i]
-		i++
+	for _, str := range tokens {
 
-		var oper func(a, b int) int
 		if str == "+" || str == "-" || str == "*" || str == "/" {
-			oper = operMap[str]
 
 			//弹出两个数字出来。
-			str1 := stack[0]
-			str2 := stack[1]
+			num1 := stack[0]
+			num2 := stack[1]
 			stack = stack[2:]
 
-			num1, _ := strconv.Atoi(str1)
-			num2, _ := strconv.Atoi(str2)
+			var num int
 			//注意此处顺序要反一下。
-			num := oper(num2, num1)
-
+			switch str {
+			case "+":
+				num = num2 + num1
+			case "-":
+				num = num2 - num1
+			case "*":
+				num = num2 * num1
+			case "/":
+				num = num2 / num1
+			}
 			//入栈
-			numStr := strconv.Itoa(num)
-			stack = append([]string{numStr}, stack...)
+			stack = append([]int{num}, stack...)
 
 		} else {
 
 			//入栈
-			stack = append([]string{str}, stack...)
+			a, _ := strconv.Atoi(str)
+			stack = append([]int{a}, stack...)
 		}
 
 	}
-	n, _ := strconv.Atoi(stack[0])
-	return n
+	return stack[0]
 }
 
 func main() {
