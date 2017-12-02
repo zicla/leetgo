@@ -8,6 +8,7 @@ import (
 	"leetgo/structure/graph"
 	"fmt"
 	"leetgo/structure/sort"
+	"leetgo/snippet"
 )
 
 const INF = math.MaxInt32
@@ -156,7 +157,6 @@ func testBinaryTreePreOrder() {
 	btree.BinaryTreeInOrderUnify(tree)
 	fmt.Println()
 
-
 	btree.BinaryTreePostOrder(tree)
 	fmt.Println()
 	btree.BinaryTreePostOrderUnify(tree)
@@ -165,5 +165,6 @@ func testBinaryTreePreOrder() {
 }
 
 func main() {
-	testBinaryTreePreOrder()
+
+	snippet.ConvertStringToDigital()
 }
