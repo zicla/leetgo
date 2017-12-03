@@ -1,15 +1,22 @@
 package main
 
 func majorityElement(nums []int) int {
-	dict := make(map[int]int)
-	N := len(nums)
+
+	major := nums[0]
+	count := 0
 	for _, v := range nums {
-		dict[v]++
-		if dict[v] > N/2 {
-			return v
+
+		if count == 0 {
+			major = v
+			count ++
+		} else if major == v {
+			count++
+		} else {
+			count--
 		}
+
 	}
-	return 0
+	return major
 }
 
 func main() {
