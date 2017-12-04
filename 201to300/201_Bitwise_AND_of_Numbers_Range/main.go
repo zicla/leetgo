@@ -18,14 +18,9 @@ func rangeBitwiseAnd(m int, n int) int {
 
 func main() {
 
-	fmt.Println(4000000)
-	fmt.Printf("%b\n", 4000000)
-
-	fmt.Println(math.MaxInt64)
-	fmt.Println(math.MaxInt32)
-	fmt.Println(2147483646)
 
 	fmt.Printf("%v \n", rangeBitwiseAnd(5, 7))
+	fmt.Printf("%v \n", rangeBitwiseAnd(8, 15))
 	fmt.Printf("%v \n", rangeBitwiseAnd(4000000, 2147483646))
 
 }
