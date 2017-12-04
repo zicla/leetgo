@@ -23,11 +23,13 @@ func isPrime(n int, primeList []int) bool {
 
 func countPrimes(n int) int {
 	res := 0
-	var primeList []int
+	var notPrimeList = make([]bool, n)
 	for i := 2; i < n; i++ {
-		if isPrime(i, primeList) {
-			primeList = append(primeList, i)
+		if !notPrimeList[i] {
 			res++
+			for j := 2; i*j < n; j++ {
+				notPrimeList[i*j] = true
+			}
 		}
 	}
 	return res
