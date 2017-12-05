@@ -1,8 +1,12 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
 
-func canFinish(numCourses int, prerequisites [][]int) bool {
+//这里是深度优先的算法
+func canFinish1(numCourses int, prerequisites [][]int) bool {
 
 	N := numCourses
 	if N == 0 || N == 1 {
@@ -54,6 +58,53 @@ func canFinishDFS(matrix [][]bool, N int, visited []int, index int) bool {
 	visited[index] = 1
 
 	return res
+
+}
+
+//这里采用广度优先的算法。
+func canFinish(numCourses int, prerequisites [][]int) bool {
+
+	N := numCourses
+	if N == 0 || N == 1 {
+		return true
+	}
+
+	graph := make(map[int][]int)
+	//记录每个元素的入度
+	inDegree := make(map[int]int, N)
+	for i := 0; i < numCourses; i++ {
+		graph[i] = make([]int, 0)
+		inDegree[i] = 0
+	}
+
+	for _, v := range prerequisites {
+		graph[v[1]] = append(graph[v[1]], v[0])
+		inDegree[v[0]]++
+	}
+
+	for len(inDegree) > 0 {
+		//入度为0的节点。
+		cur := math.MaxInt64
+		for k, v := range inDegree {
+			if v == 0 {
+				cur = k
+				break
+			}
+		}
+		//还有元素，但是已经找不到入度为0的了。
+		if cur == math.MaxInt64 {
+			return false
+		}
+
+		//遍历该元素。
+		for _, v := range graph[cur] {
+			inDegree[v]--
+		}
+		delete(inDegree, cur)
+
+	}
+
+	return true
 
 }
 
