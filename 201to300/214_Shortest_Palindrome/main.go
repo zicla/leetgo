@@ -4,128 +4,49 @@ import (
 	"fmt"
 )
 
+//反转一个字符串
+func reverse(s string) string {
+	bs := []byte(s)
+	N := len(s)
+	for i := 0; i < N/2; i++ {
+		bs[i], bs[N-1-i] = bs[N-1-i], bs[i]
+	}
+	return string(bs)
+}
+
+//判断是否是回文字符串
+func valid(s string) bool {
+	N := len(s)
+	p := 0
+	q := N - 1
+	for p < N {
+		if s[p] == s[q] {
+			p++
+			q--
+		} else {
+			return false
+		}
+	}
+	return true
+}
 func shortestPalindrome(s string) string {
 	N := len(s)
 	if N == 0 || N == 1 {
 		return s
 	}
 
-	//中间的index
-	mid := (N - 1) / 2
-	//从mid开始往左边扩展。
-
-	//反转到左边的字符串
-	start1 := 1
-	//继续呆在右边的字符串
-	start2 := 0
-	if N%2 == 1 {
-		//奇数
-		//中心点，可能是数字，可能是间隙。
-		for i := 0; i <= N-1; i++ {
-			if i%2 == 0 {
-				//数字为中心
-				p := mid - i/2 - 1
-				q := mid - i/2 + 1
-				for p >= 0 {
-					if s[p] == s[q] {
-						p--
-						q++
-					} else {
-						break
-					}
-				}
-
-				//这个中心点可以作为真正的中心点。
-				if p < 0 {
-					start1 = mid - i/2 + 1
-					start2 = mid - i/2
-					break
-				}
-
-			} else {
-				//间隙为中心
-				p := mid - i/2 - 1
-				q := mid - i/2
-				for p >= 0 {
-					if s[p] == s[q] {
-						p--
-						q++
-					} else {
-						break
-					}
-				}
-
-				//这个中心点可以作为真正的中心点。
-				if p < 0 {
-					start1 = mid - i/2
-					start2 = mid - i/2
-					break
-				}
-			}
-		}
-	} else {
-		//偶数
-		//中心点，可能是数字，可能是间隙。
-		for i := 0; i <= N-1; i++ {
-			if i%2 == 1 {
-				//数字为中心
-				p := mid - i/2 - 1
-				q := mid - i/2 + 1
-				for p >= 0 {
-					if s[p] == s[q] {
-						p--
-						q++
-					} else {
-						break
-					}
-				}
-
-				//这个中心点可以作为真正的中心点。
-				if p < 0 {
-					start1 = mid - i/2 + 1
-					start2 = mid - i/2
-					break
-				}
-
-			} else {
-				//间隙为中心
-				p := mid - i/2
-				q := mid - i/2 + 1
-				for p >= 0 {
-					if s[p] == s[q] {
-						p--
-						q++
-					} else {
-						break
-					}
-				}
-
-				//这个中心点可以作为真正的中心点。
-				if p < 0 {
-					start1 = mid - i/2 + 1
-					start2 = mid - i/2 + 1
-					break
-				}
-			}
+	for i := N - 1; i >= 0; i-- {
+		if valid(s[:i+1]) {
+			return reverse(s[i+1:]) + s
 		}
 	}
 
-	str1 := s[start1:N]
-	N1 := len(str1)
-	str2 := s[start2:N]
-	N2 := len(str2)
-	final := make([]byte, N1+N2)
-	for i := 0; i < N1; i++ {
-		final[i] = str1[N1-1-i]
-	}
-	for i := 0; i < N2; i++ {
-		final[N1+i] = str2[i]
-	}
-	return string(final)
+	return ""
 }
 
 func main() {
 
+	fmt.Printf("%v \n", shortestPalindrome("aabbc"))
 	fmt.Printf("%v \n", shortestPalindrome("a"))
 	fmt.Printf("%v \n", shortestPalindrome("abcd"))
 	fmt.Printf("%v \n", shortestPalindrome("babcd"))
