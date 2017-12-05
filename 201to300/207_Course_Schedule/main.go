@@ -10,7 +10,7 @@ func canFinish(numCourses int, prerequisites [][]int) bool {
 	}
 
 	matrix := make([][]bool, N)
-	visited := make([]bool, N)
+	visited := make([]int, N)
 	for k, _ := range matrix {
 		matrix[k] = make([]bool, N)
 	}
@@ -30,27 +30,28 @@ func canFinish(numCourses int, prerequisites [][]int) bool {
 
 }
 
-func canFinishDFS(matrix [][]bool, N int, visited []bool, index int) bool {
+//visited 0表示没有访问过，1表示访问过了，并且没问题。 -1 表示临时给这条路加个锁。
+func canFinishDFS(matrix [][]bool, N int, visited []int, index int) bool {
 
-	if visited[index] {
+	if visited[index] == 1 {
+		return true
+	}
+	if visited[index] == -1 {
 		return false
 	}
-	visited[index] = true
+	visited[index] = -1
 
 	res := true
 	for i := 0; i < N; i++ {
-		if index == i {
-			continue
-		}
 		if matrix[index][i] {
 			res = canFinishDFS(matrix, N, visited, i)
 			if !res {
-				break
+				return false
 			}
 		}
 	}
 
-	visited[index] = false
+	visited[index] = 1
 
 	return res
 
