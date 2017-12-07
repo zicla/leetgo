@@ -1,14 +1,14 @@
 package main
 
 import (
-	"leetgo/structure/avl"
-	"leetgo/structure/link"
-	"leetgo/structure/btree"
-	"math"
-	"leetgo/structure/graph"
 	"fmt"
+	"leetgo/structure/avl"
+	"leetgo/structure/btree"
+	"leetgo/structure/graph"
+	"leetgo/structure/link"
 	"leetgo/structure/sort"
-	"leetgo/snippet"
+	"math"
+	"regexp"
 )
 
 const INF = math.MaxInt32
@@ -126,7 +126,7 @@ func testHeap() {
 	fmt.Printf("%v\n", a)
 
 	b := []int{20, 10, 30, 40, 60, 160, 70, 80, 5}
-	btree.HeapSort(b);
+	btree.HeapSort(b)
 	fmt.Printf("%v \n", b)
 }
 
@@ -166,5 +166,14 @@ func testBinaryTreePreOrder() {
 
 func main() {
 
-	snippet.ConvertStringToDigital()
+	//传入string，返回string（更加方便）
+	fmt.Println("------FindString------")
+
+	// 查找以 hello 开头（忽略大小写），以 Go 结尾的字符串
+	text := "/api/matter/fetch/275b3f0d-9cf6-4524-5eb1-dcb815ab9c93/杨过.png"
+	reg := regexp.MustCompile(`^/api/matter/fetch/([^/]+)/([^/]+)$`)
+	strs := reg.FindStringSubmatch(text)
+	fmt.Printf("%q\n", strs)
+	// ["Hello 世界！123 Go"]
+
 }
