@@ -9,9 +9,43 @@ import (
 	"leetgo/structure/sort"
 	"math"
 	"regexp"
+	"leetgo/structure/compiler"
 )
 
 const INF = math.MaxInt32
+
+func main() {
+
+	testShuntingYard()
+
+}
+
+func testShuntingYard() {
+
+	compiler.CalExpression("(+9)+89+(12*3.0*0.1/0.45)+.34+1")
+	compiler.CalExpression("3.1+4.5/(3-(2*1.51))")
+	compiler.CalExpression("(+9)+1")
+	compiler.CalExpression("(-9)")
+	compiler.CalExpression("3 +-.1+ 3 * ( 6 - 1 * 2 ) / 4 - 1")
+	compiler.CalExpression("2 + 3+(1+2)")
+
+	compiler.CalExpression("3 + 3 * ( 6 - 1 * 2 ) / 4 - 1")
+
+	compiler.CalExpression("3 +-+ 3 * ( 6 - 1 * 2 ) / 4 - 1")
+	//compiler.ShuntingYard("3 +-+ 3.3.1 * ( 6 - 1 * 2 ) / 4 - 1")
+}
+
+func testRegex() {
+	//传入string，返回string（更加方便）
+	fmt.Println("------FindString------")
+
+	// 查找以 hello 开头（忽略大小写），以 Go 结尾的字符串
+	text := "/api/matter/fetch/275b3f0d-9cf6-4524-5eb1-dcb815ab9c93/杨过.png"
+	reg := regexp.MustCompile(`^/api/matter/fetch/([^/]+)/([^/]+)$`)
+	strs := reg.FindStringSubmatch(text)
+	fmt.Printf("%q\n", strs)
+	// ["Hello 世界！123 Go"]
+}
 
 func testLinkList() {
 	list := link.CreateLinkList([]int{2, 1, 3, 4, 56, 2, 1})
@@ -161,19 +195,5 @@ func testBinaryTreePreOrder() {
 	fmt.Println()
 	btree.BinaryTreePostOrderUnify(tree)
 	fmt.Println()
-
-}
-
-func main() {
-
-	//传入string，返回string（更加方便）
-	fmt.Println("------FindString------")
-
-	// 查找以 hello 开头（忽略大小写），以 Go 结尾的字符串
-	text := "/api/matter/fetch/275b3f0d-9cf6-4524-5eb1-dcb815ab9c93/杨过.png"
-	reg := regexp.MustCompile(`^/api/matter/fetch/([^/]+)/([^/]+)$`)
-	strs := reg.FindStringSubmatch(text)
-	fmt.Printf("%q\n", strs)
-	// ["Hello 世界！123 Go"]
 
 }
