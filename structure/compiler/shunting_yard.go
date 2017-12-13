@@ -101,7 +101,7 @@ func ShuntingYard(str string) []*Node {
 					}
 				} else {
 					//+优先级低，因此栈顶的出栈，自己进栈。
-					for len(stack) != 0 && (stack[len(stack)-1] == '*' || stack[len(stack)-1] == '/') {
+					for len(stack) != 0 && (stack[len(stack)-1] == '*' || stack[len(stack)-1] == '/' || stack[len(stack)-1] == '+' || stack[len(stack)-1] == '-') {
 						//出栈
 						queue = append(queue, &Node{isNumber: false, opt: stack[len(stack)-1]})
 						stack = stack[:len(stack)-1]
@@ -116,6 +116,14 @@ func ShuntingYard(str string) []*Node {
 				if canNumber {
 					panic(fmt.Sprintf("在%c附近表达有误。", str[p]))
 				} else {
+
+					//如果同等优先级，那么先计算前面的。
+					for len(stack) != 0 && (stack[len(stack)-1] == '*' || stack[len(stack)-1] == '/') {
+						//出栈
+						queue = append(queue, &Node{isNumber: false, opt: stack[len(stack)-1]})
+						stack = stack[:len(stack)-1]
+					}
+
 					//优先级很高，直接入栈
 					stack = append(stack, str[p])
 					canNumber = true

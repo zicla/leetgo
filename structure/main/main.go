@@ -22,6 +22,7 @@ func main() {
 
 func testShuntingYard() {
 
+	compiler.CalExpression("1-1+1")
 	compiler.CalExpression("(+9)+89+(12*3.0*0.1/0.45)+.34+1")
 	compiler.CalExpression("3.1+4.5/(3-(2*1.51))")
 	compiler.CalExpression("(+9)+1")
