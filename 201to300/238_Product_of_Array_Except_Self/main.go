@@ -7,22 +7,19 @@ import (
 //[1, a1, a1*a2, a1*a2*a3]
 //[a2*a3*a4, a3*a4, a4, 1]
 func productExceptSelf(nums []int) []int {
-	N := len(nums)
-	arr1 := make([]int, N)
-	arr2 := make([]int, N)
-	arr1[0] = 1
-	for i := 1; i < N; i++ {
-		arr1[i] = arr1[i-1] * nums[i-1]
-	}
-	arr2[N-1] = 1
-	for i := N - 2; i >= 0; i-- {
-		arr2[i] = arr2[i+1] * nums[i+1]
-	}
 
-	for k, v := range arr2 {
-		arr1[k] = arr1[k] * v
+	n := len(nums)
+	res := make([]int, n)
+	res[0] = 1
+	for i := 1; i < n; i++ {
+		res[i] = res[i-1] * nums[i-1]
 	}
-	return arr1
+	right := 1
+	for i := n - 1; i >= 0; i-- {
+		res[i] *= right
+		right *= nums[i]
+	}
+	return res
 }
 func main() {
 
