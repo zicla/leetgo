@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	."leetgo/structure/btree"
+)
 
 func generateTrees(n int) []*TreeNode {
 
