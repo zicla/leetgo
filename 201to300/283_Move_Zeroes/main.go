@@ -9,17 +9,12 @@ func moveZeroes(nums []int) {
 		return
 	}
 
-	for i := 1; i < N; i++ {
+	lastNonZero := 0
+	for i := 0; i < N; i++ {
 		//不是0的数往前浮。
 		if nums[i] != 0 {
-
-			k := i - 1
-			for k >= 0 && nums[k] == 0 {
-				k--
-			}
-			k++
-			nums[i], nums[k] = nums[k], nums[i]
-
+			nums[i], nums[lastNonZero] = nums[lastNonZero], nums[i]
+			lastNonZero++
 		}
 	}
 }
