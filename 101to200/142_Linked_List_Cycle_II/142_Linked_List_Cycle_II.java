@@ -2,7 +2,7 @@ package com.lish.practice.leetcode.p142;
 
 public class Solution {
 
-    //具体分析参见：https://www.cnblogs.com/hiddenfox/p/3408931.html
+    //快慢指针。具体分析参见：https://www.cnblogs.com/hiddenfox/p/3408931.html
     public ListNode detectCycle(ListNode head) {
 
         ListNode slow = head;
