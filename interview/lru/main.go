@@ -11,6 +11,13 @@ type Node struct {
 	next  *Node
 }
 
+/*
+ 问题2：缓存淘汰算法实现。
+ 说明：
+ 1.缓存的个数有上限
+ 2.当缓存到达上限，再继续插入时，淘汰上次使用距现在时间最长的那个缓存。
+ 举例：请参考main函数中的测试用例。
+*/
 type MyCache struct {
 	capacity int
 
@@ -37,7 +44,7 @@ func NewMyCache(capacity int) *MyCache {
 	return myCache
 }
 
-func (myCache *MyCache) Get(key string) (val int, ok bool) {
+func (myCache *MyCache) Get(key string) (val int, exist bool) {
 	//TODO:
 
 	if node, ok := myCache.container[key]; ok {
